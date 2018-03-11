@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>googletest e TDD</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
@@ -24,8 +24,87 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h2>Sommario</h2>
+					<ul>
+						<li>Test automatici e TDD</li>
+						<li>Installazione e utilizzo di googletest</li>
+						<li>Risolviamo un code kata</li>
+						<li>Domande</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Yuri Valentini</h2>
+					<ul>
+						<li>SW Windows e Linux</li>
+						<li>FW schede embedded</li>
+						<li>Linguaggi: C/C++, Python</li>
+						<li>Abiti:
+							<ul>
+								<li>Videoconferenza e VOIP</li>
+								<li>Automazione industriale</li>
+							</ul>
+						</li>
+						<li>yuroller@gmail.com</li>
+						<li>https://github.com/yuroller</li>					
+					</ul>
+				</section>
+				<section>
+					<h2>Testing vs Checking</h2>
+					<table>
+						<tr>
+							<td>Richiede persona senziente</td>
+							<td>Automatizzabile</td>
+						</tr>
+						<tr>
+							<td>Fa scoprire nuove cose</td>
+							<td>Conferma le nostre assunzioni</td>
+						</tr>
+						<tr>
+							<td>Fa richieste inedite</td>
+							<td>Fa sempre le stesse richieste</td>
+						</tr>
+						<tr>
+							<td>Esplorazione e scoperta di nuove cose</td>
+							<td>Assicura che il programma funzioni</td>
+						</tr>
+					</table>
+					<blockquote cite="http://www.satisfice.com/blog/archives/856">
+						Michael Bolton
+					</blockquote>
+					<aside class="note">
+						<p>Testing is the process of evaluating a product by learning about it through
+							exploration and experimentation, which includes to some degree: questioning,
+							study, modeling, observation, inference, etc.</p>
+						<p>Checking is the process of making evaluations by applying algorithmic decision
+							rules to specific observations of a product.</p>
+					</aside>
+				</section>
+				<section>					
+					<h2>TDD</h2>
+					<blockquote>
+						<ol>
+							<li>Quickly add a test</li>
+							<li>Run all tests and see the new one fail</li>
+							<li>Make a little change</li>
+							<li>Run all tests and see them all succeed</li>
+							<li>Refactor to remove duplication</li>
+						</ol>
+					</blockquote>
+					<p>&quot;TDD by Example&quot; &dash; Kent Beck</p>
+				</section>
+				<section>
+					<h2>Refactoring</h2>
+					<ul>
+						<li>Rimuovi la duplicazione (DRY)</li>
+						<li>Usa nomi appropriati</li>
+						<li>Semplifica le classi/funzioni (SRP)</li>
+					</ul>
+					<aside class="notes">
+						<p>DRY=Don't Repeat Yourself</p>
+						<p>SRP=Single Responsibility Principle</p>
+					</aside>
+				</section>
 			</div>
 		</div>
 
