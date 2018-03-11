@@ -4,6 +4,7 @@
 
 ```sh
 $ cd slides
+$ npm install
 $ npm start
 ```
 
