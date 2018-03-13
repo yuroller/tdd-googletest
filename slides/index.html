@@ -46,39 +46,85 @@
 							</ul>
 						</li>
 						<li>yuroller@gmail.com</li>
-						<li>https://github.com/yuroller</li>					
+						<li>https://github.com/yuroller</li>						
 					</ul>
+					<aside class="notes">Quanti fanno i test? conoscono gtest</aside>
 				</section>
 				<section>
 					<h2>Testing vs Checking</h2>
 					<table>
-						<tr>
-							<td>Richiede persona senziente</td>
-							<td>Automatizzabile</td>
-						</tr>
-						<tr>
-							<td>Fa scoprire nuove cose</td>
-							<td>Conferma le nostre assunzioni</td>
-						</tr>
-						<tr>
-							<td>Fa richieste inedite</td>
-							<td>Fa sempre le stesse richieste</td>
-						</tr>
-						<tr>
-							<td>Esplorazione e scoperta di nuove cose</td>
-							<td>Assicura che il programma funzioni</td>
-						</tr>
+						<tbody>
+							<tr>
+								<td>Richiede persona senziente</td>
+								<td>Automatizzabile</td>
+							</tr>
+							<tr>
+								<td>Fa scoprire nuove cose</td>
+								<td>Conferma le nostre assunzioni</td>
+							</tr>
+							<tr>
+								<td>Fa richieste inedite</td>
+								<td>Fa sempre le stesse richieste</td>
+							</tr>
+							<tr>
+								<td>Esplorazione e scoperta di nuove cose</td>
+								<td>Assicura che il programma funzioni</td>
+							</tr>
+						</tbody>
 					</table>
 					<blockquote cite="http://www.satisfice.com/blog/archives/856">
 						Michael Bolton
 					</blockquote>
-					<aside class="note">
+					<aside class="notes">
 						<p>Testing is the process of evaluating a product by learning about it through
 							exploration and experimentation, which includes to some degree: questioning,
 							study, modeling, observation, inference, etc.</p>
 						<p>Checking is the process of making evaluations by applying algorithmic decision
 							rules to specific observations of a product.</p>
 					</aside>
+				</section>
+				<section>
+					<h2>Installazione vcpkg</h2>
+					<pre>
+&gt; git clone https://github.com/Microsoft/vcpkg.git
+&gt; cd vcpkg
+&gt; bootstrap-vcpkg.bat
+(admin)&gt; vcpkg integrate install
+&gt; vcpkg install gtest:x64-windows
+					</pre>
+				</section>
+				<section>
+					<h2>Visual Studio</h2>
+					<ul>
+						<li>Creare una solution</li>
+						<li>Creare il progetto di test (console)</li>
+						<li>Aggiungere: <code>gtest{d}.lib;gtest_main{d}.lib</code></li>
+						<li>Definire: <code>_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING</code></li>
+						<li>Linker &rarr; Debugging: <code>/DEBUG:FULL</code></li>
+						<li>Rimuovere: <code>main()</code></li>
+					</ul>
+				</section>
+				<section>
+					<h2>Primo test</h2>
+					<pre>
+						<code class="c++">
+#include &lt;gtest/gtest.h&gt;
+
+TEST(TrivialTest, ChecksWeCanTest) {
+	EXPECT_EQ(0, 1);
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>FIRST</h2>
+					<ul>
+						<li>Fast</li>
+						<li>Isolated/Independent</li>
+						<li>Repeatable</li>
+						<li>Self-Validating</li>
+						<li>Thorough and Timely</li>
+					</ul>
 				</section>
 				<section>					
 					<h2>TDD</h2>
