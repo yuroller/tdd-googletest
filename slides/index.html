@@ -98,28 +98,69 @@
 					<ul>
 						<li>Creare una solution</li>
 						<li>Creare il progetto di test (console)</li>
-						<li>Aggiungere: <code>gtest{d}.lib;gtest_main{d}.lib</code></li>
-						<li>Definire: <code>_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING</code></li>
+						<li>Aggiungere: <pre><code>gtest{d}.lib;gtest_main{d}.lib</code></pre></li>
+						<li>Definire: <pre><code>_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING</code></pre></li>
 						<li>Linker &rarr; Debugging: <code>/DEBUG:FULL</code></li>
 						<li>Rimuovere: <code>main()</code></li>
 					</ul>
 				</section>
 				<section>
-					<h2>Primo test</h2>
-					<pre><code class="c++">#include &lt;gtest/gtest.h&gt;
-
+						<h2>Primo test</h2>
+						<pre><code class="c++">#include &lt;gtest/gtest.h&gt;
+	
 TEST(TrivialTest, ChecksWeCanTest) {
 	EXPECT_EQ(0, 1);
-}
-</code></pre>
+}</code></pre>
+				</section>				
+				<section>
+						<h2>Linux</h2>
+						<ul>
+							<li>Installare strumenti sviluppo e cmake</li>
+							<li>Ottenere sorgenti gtest</li>
+							<li><pre><code class="shell">$ mkdir build
+$ cd build
+$ cmake ..
+$ make && make install</code></pre></li>
+							<li>Makefile:<pre><code class="makefile">TestApp: TestApp.cpp
+  g++ -g -Wall -o TestApp TestApp.cpp \
+    -I../install/include -L../install/lib \
+    -lgtest -lgtest_main -lpthread
+.PHONY: clean
+clean:
+  rm TestApp</code></pre>
+							</li>
+						</ul>
 				</section>
 				<section>
-					<h2>Linux</h2>
+					<h2>Eseguire i test</h2>
 					<ul>
-						<li>Installare strumenti sviluppo</li>
-						<li>Download sorgenti</li>
+						<li>Linea di comando</li>
+						<li>Test runner esterno</li>
+						<li>Visual Studio Test Explorer</li>
 					</ul>
 				</section>
+				<section>
+					<h2>Asserzioni</h2>
+					<ul>
+						<li>ASSERT_*, EXPECT_*</li>
+						<li>TRUE, FALSE</li>
+						<li>EQ, NE, LT, LE, GT, GE</li>
+						<li>C-strings: STREQ, STRNE</li>
+						<li>Immediato: FAIL(), SUCCEED()</li>
+						<li>Eccezioni: THROW, ANY_THROW, NO_THROW</li>
+						<li>FLOAT_EQ, DOUBLE_EQ, NEAR</li>
+						<li>Windows: HRESULT_SUCCEEDED, HRESULT_FAILED</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Asserzioni gmock</h2>
+					<ul>						
+						<li>ASSERT_THAT, EXPECT_THAT</li>
+					</ul>
+				</section>
+				<section>Fixture</section>
+				<section>Test parameterici</section>
+				<section>Disabilitare test</section>
 				<section>
 					<h2>FIRST</h2>
 					<ul>
