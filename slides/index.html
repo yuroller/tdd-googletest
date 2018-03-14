@@ -132,6 +132,17 @@ clean:
 						</ul>
 				</section>
 				<section>
+					<h2>gtest_main.cc</h2>
+					<pre><code class="c++">#include &lt;stdio.h&gt;
+#include "gtest/gtest.h"
+
+GTEST_API_ int main(int argc, char **argv) {
+	printf("Running main() from gtest_main.cc\n");
+	testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}</code></pre>
+				</section>
+				<section>
 					<h2>Eseguire i test</h2>
 					<ul>
 						<li>Linea di comando</li>
@@ -156,11 +167,58 @@ clean:
 					<h2>Asserzioni gmock</h2>
 					<ul>						
 						<li>ASSERT_THAT, EXPECT_THAT</li>
+						<li>Generici: Eq, Ge, IsNull, NotNull</li>
+						<li>FP: FloatEq, DoubleEq, FloatNear, DoubleNear</li>
+						<li>String: MatchesRegex, StartsWith, HasSubstr</li>
+						<li>stl: Eq, Contains, IsEmpty, SizeIs</li>
+						<li>std::pair &rarr; Pair - std::map &rarr; Key</li>
 					</ul>
 				</section>
-				<section>Fixture</section>
-				<section>Test parameterici</section>
-				<section>Disabilitare test</section>
+				<section>
+					<h2>Test Fixture</h2>
+					<pre><code class="c++">class BarTest : public ::testing::Test {
+protected:
+  BarTest() {
+	instance_resource_ = new ...;
+	// inizialization
+  }
+  ~BarTest() { delete instance_resource_; }
+  // virtual void SetUp()
+  // virtual void TearDown()
+  T* instance_resource_; // reacreated each test
+};
+
+TEST_F(BarTest, Test0) { ... }</code></pre>
+				</section>				
+				<section>
+					<h2>Risorsa condivisa</h2>
+					<pre><code class="c++">class FooTest : public ::testing::Test {
+protected:
+  static void SetUpTestCase() {
+	shared_resource_ = new ...;
+  }
+  static void TearDownTestCase() {
+    delete shared_resource_;
+    shared_resource_ = nullptr;
+  }
+  static T* shared_resource_; // Shared expensive resource
+};
+
+T* FooTest::shared_resource_ = nullptr;
+TEST_F(FooTest, Test1) { ... }</code></pre>
+				</section>
+				<section>
+					<h2>Varie</h2>
+					<ul>
+						<li>DISABLED_</li>
+						<li>death test</li>
+						<li>global fixtures</li>
+						<li>test parametrici (TEST_P)</li>
+						<li>esecuzione parallela</li>
+						<li>esecuzione ordine casuale</li>
+						<li>filtri per esecuzione test</li>
+					</ul>
+				</section>
 				<section>
 					<h2>FIRST</h2>
 					<ul>
@@ -171,7 +229,24 @@ clean:
 						<li>Thorough and Timely</li>
 					</ul>
 				</section>
-				<section>					
+				<section>
+					<h2>Modello 3A per test</h2>
+					<ul>
+						<li>Arrange</li>
+						<li>Act</li>
+						<li>Assert</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Nomi dei test</h2>
+					<ul>
+						<li>Ognuno ha la sua convenzione</li>
+						<li>Test Case: {nome_classe}Test</li>
+						<li>Test Name: {descrizione_del_test}</li>		
+					</ul>
+					<pre><code class="c++">TEST(FactorialTest, HandlesZeroInput)</code></pre>
+				</section>
+				<section>
 					<h2>TDD</h2>
 					<blockquote>
 						<ol>
@@ -196,6 +271,18 @@ clean:
 						<p>SRP=Single Responsibility Principle</p>
 					</aside>
 				</section>
+				<section>
+					<h2>gmock</h2>
+					<p>TODO: esempio di mock di una interfaccia</p>
+				</section>
+				<section>
+					<h2>expectation</h2>
+					<p>TODO: elenco di expectations pi&ugrave; utili</p>
+				</section>
+				<section>
+					<h2>Kata</h2>
+					<p>TODO: descrizione kata</p>
+				</section>				
 			</div>
 		</div>
 
