@@ -38,11 +38,12 @@
 					<ul>
 						<li>SW Windows e Linux</li>
 						<li>FW schede embedded</li>
-						<li>Linguaggi: C/C++, Python</li>
+						<li>Linguaggi: C/C++, C#, Python</li>
 						<li>Abiti:
 							<ul>
 								<li>Videoconferenza e VOIP</li>
 								<li>Automazione industriale</li>
+								<li>Biomedicale</li>
 							</ul>
 						</li>
 						<li>yuroller@gmail.com</li>
@@ -72,9 +73,7 @@
 							</tr>
 						</tbody>
 					</table>
-					<blockquote cite="http://www.satisfice.com/blog/archives/856">
-						Michael Bolton blog post
-					</blockquote>
+					<p><a href="http://www.satisfice.com/blog/archives/856">Michael Bolton blog post</a></p>
 					<aside class="notes">
 						<p>Testing is the process of evaluating a product by learning about it through
 							exploration and experimentation, which includes to some degree: questioning,
@@ -84,7 +83,7 @@
 					</aside>
 				</section>
 				<section>
-					<h2>Installazione vcpkg</h2>
+					<h2>Installazione <a href="https://github.com/Microsoft/vcpkg">vcpkg</a></h2>
 					<pre>
 &gt; git clone https://github.com/Microsoft/vcpkg.git
 &gt; cd vcpkg
@@ -162,6 +161,7 @@ GTEST_API_ int main(int argc, char **argv) {
 						<li>FLOAT_EQ, DOUBLE_EQ, NEAR</li>
 						<li>Windows: HRESULT_SUCCEEDED, HRESULT_FAILED</li>
 					</ul>
+					<p><a href="https://github.com/google/googletest/blob/master/googletest/docs/Primer.md">Documentazione gtest</a></p>
 				</section>
 				<section>
 					<h2>Asserzioni gmock</h2>
@@ -173,6 +173,7 @@ GTEST_API_ int main(int argc, char **argv) {
 						<li>stl: Eq, Contains, IsEmpty, SizeIs</li>
 						<li>std::pair &rarr; Pair - std::map &rarr; Key</li>
 					</ul>
+					<p><a href="https://github.com/google/googletest/blob/master/googlemock/docs/CheatSheet.md">Documentazione gmock</a></p>
 				</section>
 				<section>
 					<h2>Test Fixture</h2>
@@ -239,12 +240,25 @@ TEST_F(FooTest, Test1) { ... }</code></pre>
 				</section>
 				<section>
 					<h2>Nomi dei test</h2>
+					<p>Ognuno ha la sua convenzione</p>
 					<ul>
-						<li>Ognuno ha la sua convenzione</li>
-						<li>Test Case: {nome_classe}Test</li>
-						<li>Test Name: {descrizione_del_test}</li>		
+						<li>Test Case: {nome_classe/scenario}Test</li>
+						<li>Test Name: {descrizione_del_test}</li>
 					</ul>
 					<pre><code class="c++">TEST(FactorialTest, HandlesZeroInput)</code></pre>
+					<p>Alcuni usano: MethodName_GivenConditions
+						_WhenThisHappens_ThenThisisExpectedResult</p>
+					<pre><code class="c++">sumOfTwoNumbers_givenTwoPositiveNumbers
+_WhenNumbersArePositive_ThenResultIsPositive()</code></pre>
+				</section>
+				<section>
+					<h2>Cosa testare</h2>
+					<ul>
+						<li>Coverage del codice sorgente</li>
+						<li>Condizioni dell'if</li>
+						<li>Input valido e input <b>NON</b> valido</li>
+						<li>exception</li>						
+					</ul>
 				</section>
 				<section>
 					<h2>TDD</h2>
@@ -272,17 +286,121 @@ TEST_F(FooTest, Test1) { ... }</code></pre>
 					</aside>
 				</section>
 				<section>
-					<h2>gmock</h2>
-					<p>TODO: esempio di mock di una interfaccia</p>
+					<h2>Mock di interfaccia</h2>
+					<pre><code class="c++">class Foo {
+   virtual ~Foo();
+   virtual int GetSize() const = 0;
+   virtual string Describe(const char* name) = 0;
+   virtual string Describe(int type) = 0;
+   virtual bool Process(Bar elem, int count) = 0;
+};</code></pre>
+					<pre><code class="c++">class MockFoo : public Foo {
+   MOCK_CONST_METHOD0(GetSize, int());
+   MOCK_METHOD1(Describe, string(const char* name));
+   MOCK_METHOD1(Describe, string(int type));
+   MOCK_METHOD2(Process, bool(Bar elem, int count));
+};</code></pre>
+					<pre><code class="c++">// default is NaggyMock (prints a warning)
+NiceMock&lt;MockFoo&gt; nice_foo; // ignores uninteresting calls
+StrictMock&lt;MockFoo&gt; strict_foo; // fails on uninteresting calls</code></pre>
 				</section>
 				<section>
-					<h2>expectation</h2>
-					<p>TODO: elenco di expectations pi&ugrave; utili</p>
+					<h2>Uso di mock</h2>
+					<pre><code class="c++">TEST(BarTest, DoesThis) {
+	MockFoo foo;
+
+	ON_CALL(foo, GetSize())
+		.WillByDefault(Return(1));
+	// ... other default actions ...
+
+	EXPECT_CALL(foo, Describe(5))
+		.Times(3)
+		.WillRepeatedly(Return("Category 5"));
+	// ... other expectations ...
+
+	EXPECT_EQ("good", MyProductionFunction(&foo));
+}</code></pre>
 				</section>
 				<section>
-					<h2>Kata</h2>
-					<p>TODO: descrizione kata</p>
-				</section>				
+					<section>
+						<h2>Numerology Kata</h2>
+						<p><a href="https://github.com/Gianfrancoalongi/incremental_katas">Incremental Kata repo</a></p>
+						<pre>Welcome to Numerology!
+
+Numerology is the leading Number Processing company in Numberland,
+and you are starting out as a new recruit in the Prestigeous
+First Array Processing Unit, Subdivision Integer numbers.
+
+In order to prepare the new recruits, Numerology regularly gives
+the recruits problems to work on. 
+
+For the first task, you will implement a number replacer which
+replaces all 9's by two tens.
+
+As in the example below:
+
+input: 1,2,3,4,5,6,7,8,9,10
+output: 1,2,3,4,5,6,7,8,10,10,10</pre>
+					</section>
+					<section>
+						<h2>Step 2</h2>
+						<pre>For the next task, you will extend the functionality by replacing
+all 2's by an equal amount of ones as the number to the left of
+the 2, and all 6's by an equal amount of 3's as the value of the
+number which is an equal amount of steps to the right of the 6 as
+the number which is to the immediate left of it.
+
+As in the examples below
+
+	input: 3,2,3,4,5
+	output: 3,1,1,1,3,4,5
+
+	input: 1,6,3,4,5
+	output: 1,3,3,3,3,4,5</pre>
+					</section>
+					<section>
+						<h2>Step 3</h2>
+						<pre>For the next task, you will extend the functionality by adding the
+ability to replace any 3 by a 5 if not immediately succeeded by 5
+and any 4 by a 3 if not immediately preceeded by 5.
+When replacing the 3's and 4's, you may not replace more than
+one 3 or 4 in a go without having replaced one instance of the
+other in between.
+When four 3's have been replaced, and three 4's have been replaced.
+No more replacements may occur until a 7 is seen. Once a 7 is seen,
+the whole process is reset and four 3's and three 4's may be
+replaced again.
+
+As in the examples below
+
+	input: 3,5          input: 3,15
+	output: 3,5         output: 5,15
+
+	input: 5,4          input: 15,4
+	output: 5,4         output: 15,3</pre>
+					</section>
+					<section>
+						<h2>Step 4</h2>
+						<pre>For the next task, you will extend the functionality by replacing
+the last integer in the input sequence by the lowest next odd number
+if not already odd, when the first number in the input sequence is
+not even. The mutation of the last integer happens after all other
+rules have been applied, with the basis of the premise from the
+pristine unmutated version of the first integer in the series as it
+was before any rules where applied to mutate the sequence of numbers.
+
+As in the examples below
+
+	input: 1,11,10
+	output: 1,11,9
+
+	input: 1,11,9
+	output: 1,11,9
+
+	input: 12,11,10
+	output: 12,11,10</pre>
+					</section>
+				</section>
 			</div>
 		</div>
 
