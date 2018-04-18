@@ -29,6 +29,7 @@
 					<ul>
 						<li>Test automatici e TDD</li>
 						<li>Installazione e utilizzo di googletest</li>
+						<li>Test con googlemock</li>
 						<li>Risolviamo un code kata</li>
 						<li>Domande</li>
 					</ul>
@@ -284,6 +285,48 @@ _WhenNumbersArePositive_ThenResultIsPositive()</code></pre>
 						<p>DRY=Don't Repeat Yourself</p>
 						<p>SRP=Single Responsibility Principle</p>
 					</aside>
+				</section>
+				<section>
+					<h2>Stile di test</h2>
+					<ul>
+						<li>Classicista (Chicago/Detroit school)</li>
+						<li>Mockista (London school)
+							<a href="http://www.growing-object-oriented-software.com/">GOOS</a></li>
+					</ul>
+				</section>
+				<section>
+					<section>
+						<h2><a href="https://blog.pragmatists.com/test-doubles-fakes-mocks-and-stubs-1a7491dfa3da">Test doubles</a></h2>
+						<ul>
+							<li>Fake</li>
+							<li>Stub</li>
+							<li>Mock</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Fake</h2>
+						<blockquote>Fakes are objects that have working implementations, but not same as production one.
+							Usually they take some shortcut and have simplified version of production code.</blockquote>
+					</section>
+					<section>
+						<h2>Stub</h2>
+						<blockquote>Stub is an object that holds predefined data and uses it to answer calls during tests.
+							It is used when we cannot or don’t want to involve objects that would answer with real data or have undesirable side effects.</blockquote>
+					</section>
+					<section>
+						<h2>Mock</h2>
+						<blockquote>Mocks are objects that register calls they receive.
+						In test assertion we can verify on Mocks that all expected actions were performed.</blockquote>
+					</section>							
+				</section>
+				<section>
+					<h2>Quando usare i mock</h2>
+					<ul>
+						<li>valori non deterministici (es. orario)</li>
+						<li>condizioni difficili da ricreare (es. errori di rete)</li>
+						<li>metodi che rallentano i test (es. accesso al db)</li>
+						<li>evitare di aggiungere metodi per ispezionare lo stato</li>
+					</ul>
 				</section>
 				<section>
 					<h2>Mock di interfaccia</h2>
